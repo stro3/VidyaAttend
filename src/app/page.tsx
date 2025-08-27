@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import { CheckCircle, Users, Mail, Download, Phone } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const features = [
     "One-click attendance marking.",
@@ -70,6 +71,9 @@ export default function LandingPage() {
                         <h3 className="text-3xl font-bold mb-4">Technology & System Flow</h3>
                         <p className="text-muted-foreground mb-4">
                             We use modern, reliable technology to create a lightweight and accessible system. The entire application is built on the Next.js framework with React, ensuring a fast and responsive user experience. Facial recognition is powered by cutting-edge AI models from Google.
+                        </p>
+                         <p className="text-muted-foreground mb-4">
+                            Hardware requirements are minimal: just a basic smartphone with a camera. The software is a lightweight web application designed to work well even in low-bandwidth environments.
                         </p>
                         <Card>
                             <CardHeader>
@@ -185,31 +189,27 @@ export default function LandingPage() {
                 {/* FAQ */}
                 <section id="faq">
                      <h3 className="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h3>
-                     <div className="max-w-3xl mx-auto space-y-4">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>What is the cost of the system?</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <p>The software is open-source and free. We aim to keep hardware requirements minimal (a basic smartphone) to ensure accessibility for all schools.</p>
-                            </CardContent>
-                        </Card>
-                         <Card>
-                            <CardHeader>
-                                <CardTitle>How is data privacy and security handled?</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <p>All data is stored locally on the device, not on external servers. Photos are processed in memory and immediately discarded. We adhere to strict privacy principles to protect student data.</p>
-                            </CardContent>
-                        </Card>
-                         <Card>
-                            <CardHeader>
-                                <CardTitle>Do you provide technical support?</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <p>Yes, we provide documentation and community support. For our official pilot school partners, we offer dedicated technical assistance to ensure smooth implementation.</p>
-                            </CardContent>
-                        </Card>
+                     <div className="max-w-3xl mx-auto">
+                        <Accordion type="single" collapsible className="w-full">
+                            <AccordionItem value="item-1">
+                                <AccordionTrigger>What is the cost of the system?</AccordionTrigger>
+                                <AccordionContent>
+                                The software is open-source and free. We aim to keep hardware requirements minimal (a basic smartphone) to ensure accessibility for all schools.
+                                </AccordionContent>
+                            </AccordionItem>
+                            <AccordionItem value="item-2">
+                                <AccordionTrigger>How is data privacy and security handled?</AccordionTrigger>
+                                <AccordionContent>
+                                All data is stored locally on the device, not on external servers. Photos are processed in memory and immediately discarded. We adhere to strict privacy principles to protect student data.
+                                </AccordionContent>
+                            </AccordionItem>
+                            <AccordionItem value="item-3">
+                                <AccordionTrigger>Do you provide technical support?</AccordionTrigger>
+                                <AccordionContent>
+                                Yes, we provide documentation and community support. For our official pilot school partners, we offer dedicated technical assistance to ensure smooth implementation.
+                                </AccordionContent>
+                            </AccordionItem>
+                        </Accordion>
                      </div>
                 </section>
             </main>
