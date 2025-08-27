@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import { CheckCircle, Users, Mail, Download, Phone, BarChart2, Star, TrendingUp, ChevronDown, Rocket, Smartphone, Cloud, WifiOff } from "lucide-react";
+import { CheckCircle, Users, Mail, Download, Phone, BarChart2, Star, TrendingUp, ChevronDown, Rocket, Smartphone, Cloud, WifiOff, Clock, AlertTriangle, School } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Cell } from "recharts"
@@ -241,6 +241,42 @@ export default function LandingPage() {
                 <section id="impact" className="bg-muted -mx-4 md:-mx-8 p-4 md:p-12 rounded-lg">
                     <div className="container mx-auto">
                         <h3 className="text-3xl font-bold text-center mb-12">Why It Matters: The Impact</h3>
+                        <div className="text-center mb-12">
+                            <h4 className="text-2xl font-semibold mb-4">The Problem with Manual Attendance</h4>
+                            <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                                <Card>
+                                    <CardHeader className="items-center">
+                                        <Clock className="w-12 h-12 text-destructive mb-2" />
+                                        <CardTitle>Time Wasted</CardTitle>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <p className="text-lg font-bold">15-20 mins</p>
+                                        <p className="text-sm text-muted-foreground">lost per class, daily</p>
+                                    </CardContent>
+                                </Card>
+                                <Card>
+                                    <CardHeader className="items-center">
+                                        <AlertTriangle className="w-12 h-12 text-destructive mb-2" />
+                                        <CardTitle>High Error Rate</CardTitle>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <p className="text-lg font-bold">Up to 25%</p>
+                                        <p className="text-sm text-muted-foreground">inaccuracy in manual logs</p>
+                                    </CardContent>
+                                </Card>
+                                <Card>
+                                    <CardHeader className="items-center">
+                                        <School className="w-12 h-12 text-destructive mb-2" />
+                                        <CardTitle>Resource Drain</CardTitle>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <p className="text-lg font-bold">Inaccurate</p>
+                                        <p className="text-sm text-muted-foreground">meal & funding allocation</p>
+                                    </CardContent>
+                                </Card>
+                            </div>
+                        </div>
+
                         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                             <Card>
                                 <CardHeader>
@@ -382,7 +418,3 @@ export default function LandingPage() {
         </div>
     );
 }
-
-    
-
-    
