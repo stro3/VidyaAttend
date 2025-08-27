@@ -10,7 +10,7 @@ import { ArrowRight, Users, UserCheck, UserX, Percent, Clock, AlertTriangle, Sea
 import { useLocalStorage } from '@/hooks/use-local-storage';
 import { DEFAULT_STUDENTS } from '@/lib/data';
 import type { AttendanceRecord, Student } from '@/lib/types';
-import { format, subDays, startOfMonth, endOfMonth, isWithinInterval } from 'date-fns';
+import { format, subDays, startOfMonth, endOfMonth, isWithinInterval, parseISO } from 'date-fns';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -303,3 +303,5 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+    
