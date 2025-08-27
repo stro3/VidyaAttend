@@ -1,10 +1,11 @@
+
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import { CheckCircle, Users, Mail, Download, Phone, BarChart2, Star, TrendingUp } from "lucide-react";
+import { CheckCircle, Users, Mail, Download, Phone, BarChart2, Star, TrendingUp, ChevronDown } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Cell } from "recharts"
@@ -61,15 +62,28 @@ export default function LandingPage() {
 
             <main className="container mx-auto p-4 md:p-8 space-y-24">
                 {/* Hero Section */}
-                <section className="text-center pt-8">
-                    <h2 className="text-4xl md:text-5xl font-bold font-headline mb-4">Revolutionizing Attendance in Rural Schools</h2>
+                <section className="text-center pt-16 pb-16">
+                    <h1 className="text-4xl md:text-6xl font-bold font-headline mb-4 text-primary">VidyaAttend</h1>
+                    <p className="text-xl md:text-2xl text-muted-foreground font-light mb-2">Automated Attendance System for Rural Schools</p>
                     <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-                        VidyaAttend is a smart, simple, and scalable solution to ensure every child's presence is counted, bridging the gap between technology and rural education.
+                       Smart, Accurate, and Efficient Attendance for Every Child.
                     </p>
-                    <div className="flex justify-center">
-                        <Image src="https://picsum.photos/800/400" width={800} height={400} alt="Happy students in a classroom" className="rounded-lg shadow-2xl" data-ai-hint="happy students" />
+                    <div className="flex flex-wrap justify-center gap-4">
+                        <Button size="lg" asChild>
+                           <Link href="#contact">Request a Demo</Link>
+                        </Button>
+                        <Button size="lg" variant="outline" asChild>
+                            <Link href="#features">
+                                Learn More <ChevronDown className="ml-2 h-5 w-5" />
+                            </Link>
+                        </Button>
                     </div>
                 </section>
+                
+                <div className="flex justify-center -mt-16 mb-16">
+                     <Image src="https://picsum.photos/1200/600" width={1200} height={600} alt="Happy students in a classroom" className="rounded-lg shadow-2xl" data-ai-hint="happy students" />
+                </div>
+
 
                 {/* Key Features */}
                 <section id="features">
@@ -340,3 +354,5 @@ export default function LandingPage() {
         </div>
     );
 }
+
+    
