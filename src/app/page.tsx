@@ -6,7 +6,7 @@ import Image from "next/image";
 import { CheckCircle, Users, Mail, Download, Phone, BarChart2, Star, TrendingUp } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
+import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Cell } from "recharts"
 
 const features = [
     "One-click attendance marking.",
@@ -339,5 +339,3 @@ export default function LandingPage() {
         </div>
     );
 }
-
-    
