@@ -44,10 +44,10 @@ const features = [
 ];
 
 const benefits = {
-    teachers: "Reduces administrative work by up to 3 hours per week.",
-    students: "Increases instructional time by up to 15 minutes per day.",
-    administrators: "Ensures 100% accurate data for government reporting.",
-    government: "Enables data-driven decision-making for resource allocation."
+    teachers: "Save time, focus on teaching",
+    students: "Fair reporting of attendance",
+    administrators: "Accurate data for government audits",
+    government: "Better resource allocation & monitoring"
 }
 
 const team = [
