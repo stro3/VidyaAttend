@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect, useMemo } from 'react';
@@ -15,22 +16,32 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
+// Helper function to safely parse date strings from local storage
+function parseDateSafe(dateString: string) {
+    const [year, month, day] = dateString.split('-').map(Number);
+    // Note: month is 0-indexed in JavaScript Date
+    return new Date(year, month - 1, day);
+}
+
 export default function DashboardPage() {
   const [attendanceRecords] = useLocalStorage<AttendanceRecord[]>('attendanceRecords', []);
   const [students] = useLocalStorage<Student[]>('students', DEFAULT_STUDENTS);
   const [isClient, setIsClient] = useState(false);
+  const [currentDate, setCurrentDate] = useState<Date | null>(null);
+
 
   useEffect(() => {
     setIsClient(true);
+    setCurrentDate(new Date());
   }, []);
 
   const today = useMemo(() => {
-    if (!isClient) return null;
-    return format(new Date(), 'yyyy-MM-dd')
-  }, [isClient]);
+    if (!currentDate) return null;
+    return format(currentDate, 'yyyy-MM-dd')
+  }, [currentDate]);
 
   const { todayStats, weekData, mostAbsences, isAttendancePending } = useMemo(() => {
-    if (!isClient || !today) return { todayStats: { present: 0, absent: 0, tardy: 0 }, weekData: [], mostAbsences: [], isAttendancePending: true };
+    if (!isClient || !today || !currentDate) return { todayStats: { present: 0, absent: 0, tardy: 0 }, weekData: [], mostAbsences: [], isAttendancePending: true };
 
     // Today's stats
     const todayRecords = attendanceRecords.filter(rec => rec.date === today);
@@ -40,7 +51,7 @@ export default function DashboardPage() {
     const todayStats = { present, absent, tardy };
 
     // Weekly chart data
-    const last7Days = Array.from({ length: 7 }, (_, i) => subDays(new Date(), i)).reverse();
+    const last7Days = Array.from({ length: 7 }, (_, i) => subDays(currentDate, i)).reverse();
     const weekData = last7Days.map(day => {
         const dateStr = format(day, 'yyyy-MM-dd');
         const dayRecords = attendanceRecords.filter(rec => rec.date === dateStr);
@@ -54,13 +65,14 @@ export default function DashboardPage() {
     });
 
     // Students with most absences this month
-    const monthStart = startOfMonth(new Date());
-    const monthEnd = endOfMonth(new Date());
+    const monthStart = startOfMonth(currentDate);
+    const monthEnd = endOfMonth(currentDate);
+
     const studentAbsences = students.map(student => {
         const absences = attendanceRecords.filter(rec => 
             rec.studentId === student.id && 
             rec.status === 'Absent' &&
-            isWithinInterval(parseISO(rec.date), { start: monthStart, end: monthEnd })
+            isWithinInterval(parseDateSafe(rec.date), { start: monthStart, end: monthEnd })
         ).length;
         return { ...student, absences };
     }).filter(s => s.absences > 0).sort((a, b) => b.absences - a.absences).slice(0, 5);
@@ -71,7 +83,7 @@ export default function DashboardPage() {
         mostAbsences: studentAbsences,
         isAttendancePending: todayRecords.length === 0,
     };
-  }, [attendanceRecords, students, isClient, today]);
+  }, [attendanceRecords, students, isClient, today, currentDate]);
 
   const totalStudents = students.length;
   const attendancePercentage = totalStudents > 0 ? ((todayStats.present + todayStats.tardy) / totalStudents) * 100 : 0;
@@ -81,7 +93,7 @@ export default function DashboardPage() {
       { name: 'Tardy', value: todayStats.tardy, color: 'hsl(var(--accent))' },
   ];
 
-  if (!isClient) {
+  if (!isClient || !currentDate) {
      return (
         <div className="flex flex-col gap-8">
             <div>
@@ -115,7 +127,7 @@ export default function DashboardPage() {
                  <Card className="lg:col-span-2">
                     <CardHeader>
                         <CardTitle>Today's Breakdown</CardTitle>
-                        <CardDescription>{format(new Date(), "MMMM d, yyyy")}</CardDescription>
+                        <CardDescription>Loading...</CardDescription>
                     </CardHeader>
                     <CardContent className="h-[300px] w-full">
                        <Skeleton className="h-full w-full" />
@@ -222,7 +234,7 @@ export default function DashboardPage() {
             <Card className="lg:col-span-2">
                  <CardHeader>
                     <CardTitle>Today's Breakdown</CardTitle>
-                    <CardDescription>{format(new Date(), "MMMM d, yyyy")}</CardDescription>
+                    <CardDescription>{format(currentDate, "MMMM d, yyyy")}</CardDescription>
                 </CardHeader>
                 <CardContent className="h-[300px] w-full flex items-center justify-center">
                    <ResponsiveContainer width="100%" height="100%">
@@ -290,9 +302,4 @@ export default function DashboardPage() {
 
     </div>
   );
-}
-
-function parseISO(dateString: string) {
-    const [year, month, day] = dateString.split('-').map(Number);
-    return new Date(year, month - 1, day);
 }
