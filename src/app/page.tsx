@@ -5,17 +5,42 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import { CheckCircle, Users, Mail, Download, Phone, BarChart2, Star, TrendingUp, ChevronDown } from "lucide-react";
+import { CheckCircle, Users, Mail, Download, Phone, BarChart2, Star, TrendingUp, ChevronDown, Rocket, Smartphone, Cloud, WifiOff } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Cell } from "recharts"
 
 const features = [
-    "One-click attendance marking.",
-    "Automated attendance reports.",
-    "SMS/email notifications to parents.",
-    "Real-time data synchronization.",
-    "Offline mode for low-connectivity areas."
+    { 
+        title: "Facial Recognition Attendance",
+        description: "Quick, accurate, and automated attendance marking without manual input.",
+        icon: Rocket 
+    },
+    { 
+        title: "Cloud-Backed Reports",
+        description: "Real-time data sharing with administrators and government bodies.",
+        icon: Cloud 
+    },
+    { 
+        title: "Offline Mode",
+        description: "Fully functional even in low-connectivity rural areas.",
+        icon: WifiOff
+    },
+    { 
+        title: "Mobile-Friendly App",
+        description: "Teachers can easily use the system on any standard smartphone.",
+        icon: Smartphone
+    },
+     { 
+        title: "RFID-based Option",
+        description: "A low-cost alternative for areas with poor connectivity or basic hardware.",
+        icon: Users
+    },
+     { 
+        title: "Automated Reports",
+        description: "Generate daily, weekly, or monthly attendance reports with a single click.",
+        icon: BarChart2
+    },
 ];
 
 const benefits = {
@@ -87,13 +112,16 @@ export default function LandingPage() {
 
                 {/* Key Features */}
                 <section id="features">
-                    <h3 className="text-3xl font-bold text-center mb-12">Key Features</h3>
+                    <h3 className="text-3xl font-bold text-center mb-12">Features & Solutions</h3>
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {features.map((feature, index) => (
                             <Card key={index} className="transform hover:scale-105 transition-transform duration-300">
-                                <CardContent className="p-6 flex items-center gap-4">
-                                    <CheckCircle className="text-primary w-8 h-8 shrink-0"/>
-                                    <p className="font-medium">{feature}</p>
+                                <CardHeader className="flex flex-row items-center gap-4">
+                                     <feature.icon className="text-primary w-10 h-10 shrink-0"/>
+                                     <CardTitle className="text-xl">{feature.title}</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <p className="text-muted-foreground">{feature.description}</p>
                                 </CardContent>
                             </Card>
                         ))}
@@ -354,5 +382,7 @@ export default function LandingPage() {
         </div>
     );
 }
+
+    
 
     
