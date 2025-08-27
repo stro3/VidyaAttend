@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from "react";
@@ -10,8 +11,6 @@ import {
 import {
   LayoutDashboard,
   Camera,
-  BookText,
-  BarChart2,
   BookOpenCheck,
   Users,
 } from "lucide-react";
@@ -20,8 +19,6 @@ import Link from "next/link";
 const links = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/dashboard/attendance", label: "Take Attendance", icon: Camera },
-  { href: "/dashboard/logs", label: "Attendance Logs", icon: BookText },
-  { href: "/dashboard/reports", label: "Reports", icon: BarChart2 },
   { href: "/dashboard/students", label: "Students", icon: Users },
 ];
 
@@ -32,7 +29,7 @@ function NavComponent() {
     <SidebarMenu>
       {links.map((link) => (
         <SidebarMenuItem key={link.href}>
-          <Link href={link.href} passHref>
+          <Link href={link.href}>
             <SidebarMenuButton
               isActive={pathname === link.href}
               tooltip={{ children: link.label, side: "right", align: "center" }}
