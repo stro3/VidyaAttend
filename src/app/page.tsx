@@ -8,7 +8,7 @@ import Image from "next/image";
 import { CheckCircle, Users, Mail, Download, Phone, BarChart2, Star, TrendingUp, ChevronDown, Rocket, Smartphone, Cloud, WifiOff, Clock, AlertTriangle, School } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Cell } from "recharts"
+import { BarChart, Bar, ResponsiveContainer, XAxis, YAxis, Cell } from "recharts"
 
 const features = [
     { 
@@ -149,8 +149,8 @@ export default function LandingPage() {
                                         <div className="w-px h-16 bg-border"></div>
                                     </div>
                                     <div>
-                                        <h4 className="font-semibold">Capture Photo</h4>
-                                        <p className="text-sm text-muted-foreground">Teacher captures a single photo of entering students using a simple smartphone.</p>
+                                        <h4 className="font-semibold">Scan & Capture</h4>
+                                        <p className="text-sm text-muted-foreground">As students enter, a teacher uses a smartphone to scan their face or RFID card.</p>
                                     </div>
                                 </div>
                                  <div className="flex items-start gap-4">
@@ -159,15 +159,15 @@ export default function LandingPage() {
                                         <div className="w-px h-16 bg-border"></div>
                                     </div>
                                     <div>
-                                        <h4 className="font-semibold">AI Recognition</h4>
-                                        <p className="text-sm text-muted-foreground">The photo is securely analyzed by our AI to identify students from the enrolled roster.</p>
+                                        <h4 className="font-semibold">Log & Store</h4>
+                                        <p className="text-sm text-muted-foreground">Attendance is automatically logged and stored locally on the device, even without internet.</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-4">
                                      <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">3</div>
                                     <div>
-                                        <h4 className="font-semibold">Generate Reports</h4>
-                                        <p className="text-sm text-muted-foreground">Attendance is automatically logged, and reports are instantly available for administrators.</p>
+                                        <h4 className="font-semibold">Sync & Report</h4>
+                                        <p className="text-sm text-muted-foreground">Data is synced to the server when connectivity is available, feeding into dashboards for schools and government.</p>
                                     </div>
                                 </div>
                             </CardContent>
