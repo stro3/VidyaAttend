@@ -22,9 +22,23 @@ import { Badge } from "@/components/ui/badge";
 import { useLocalStorage } from '@/hooks/use-local-storage';
 import { DEFAULT_STUDENTS } from '@/lib/data';
 import type { AttendanceRecord, Student } from '@/lib/types';
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
 import { Card, CardContent } from '../ui/card';
 import { Skeleton } from '../ui/skeleton';
+
+// Helper function to safely parse date strings from local storage
+function parseDateSafe(dateString: string) {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+        const parts = dateString.split('-');
+        if (parts.length === 3) {
+            // Assumes YYYY-MM-DD
+            return new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
+        }
+        return null;
+    }
+    return date;
+}
 
 const RECORDS_PER_PAGE = 10;
 
@@ -43,16 +57,28 @@ export default function AttendanceLogsTable() {
   const studentMap = useMemo(() => new Map(students.map(s => [s.id, s.name])), [students]);
   
   const uniqueDates = useMemo(() => {
+    if (!isClient) return [];
     const dates = new Set(records.map(r => r.date));
-    return Array.from(dates).sort((a, b) => b.localeCompare(a));
-  }, [records]);
+    return Array.from(dates).sort((a, b) => {
+        const dateA = parseDateSafe(a);
+        const dateB = parseDateSafe(b);
+        if (!dateA || !dateB) return 0;
+        return dateB.getTime() - dateA.getTime();
+    });
+  }, [records, isClient]);
 
   const filteredRecords = useMemo(() => {
+    if (!isClient) return [];
     return records
       .filter(record => (dateFilter === 'all' || record.date === dateFilter))
       .filter(record => (studentFilter === 'all' || record.studentId === studentFilter))
-      .sort((a, b) => b.date.localeCompare(a.date));
-  }, [records, dateFilter, studentFilter]);
+      .sort((a, b) => {
+          const dateA = parseDateSafe(a.date);
+          const dateB = parseDateSafe(b.date);
+          if (!dateA || !dateB) return 0;
+          return dateB.getTime() - dateA.getTime();
+       });
+  }, [records, dateFilter, studentFilter, isClient]);
 
   const totalPages = Math.ceil(filteredRecords.length / RECORDS_PER_PAGE);
   const paginatedRecords = filteredRecords.slice(
@@ -105,9 +131,11 @@ export default function AttendanceLogsTable() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Dates</SelectItem>
-              {uniqueDates.map(date => (
-                <SelectItem key={date} value={date}>{format(parseISO(date), 'MMMM d, yyyy')}</SelectItem>
-              ))}
+              {uniqueDates.map(date => {
+                const parsed = parseDateSafe(date);
+                if (!parsed) return null;
+                return (<SelectItem key={date} value={date}>{format(parsed, 'MMMM d, yyyy')}</SelectItem>)
+              })}
             </SelectContent>
           </Select>
           <Select value={studentFilter} onValueChange={setStudentFilter}>
@@ -133,18 +161,29 @@ export default function AttendanceLogsTable() {
             </TableHeader>
             <TableBody>
               {paginatedRecords.length > 0 ? (
-                paginatedRecords.map((record, index) => (
-                  <TableRow key={`${record.date}-${record.studentId}-${index}`}>
-                    <TableCell className="font-medium">{studentMap.get(record.studentId) || 'Unknown'}</TableCell>
-                    <TableCell>{format(parseISO(record.date), 'MMMM d, yyyy')}</TableCell>
-                    <TableCell className="text-right">
-                      <Badge variant={record.status === 'Present' ? 'default' : 'destructive'}
-                         className={record.status === 'Present' ? 'bg-green-600/80 hover:bg-green-600' : ''}>
-                        {record.status}
-                      </Badge>
-                    </TableCell>
-                  </TableRow>
-                ))
+                paginatedRecords.map((record, index) => {
+                  const parsedDate = parseDateSafe(record.date);
+                  if (!parsedDate) return null;
+                  return (
+                    <TableRow key={`${record.date}-${record.studentId}-${index}`}>
+                        <TableCell className="font-medium">{studentMap.get(record.studentId) || 'Unknown'}</TableCell>
+                        <TableCell>{format(parsedDate, 'MMMM d, yyyy')}</TableCell>
+                        <TableCell className="text-right">
+                        <Badge 
+                            variant={
+                                record.status === 'Present' ? 'default' : 
+                                record.status === 'Tardy' ? 'secondary' : 'destructive'
+                            }
+                            className={
+                                record.status === 'Present' ? 'bg-green-600/80 hover:bg-green-600' : 
+                                record.status === 'Tardy' ? 'bg-orange-500/80 hover:bg-orange-500 text-white' : ''
+                            }>
+                            {record.status}
+                        </Badge>
+                        </TableCell>
+                    </TableRow>
+                  )
+                })
               ) : (
                 <TableRow>
                   <TableCell colSpan={3} className="h-24 text-center">
@@ -165,13 +204,13 @@ export default function AttendanceLogsTable() {
             Previous
           </Button>
           <span className="text-sm text-muted-foreground">
-            Page {currentPage} of {totalPages}
+            Page {currentPage} of {totalPages || 1}
           </span>
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages || 1))}
+            disabled={currentPage === totalPages || totalPages === 0}
           >
             Next
           </Button>

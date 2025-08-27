@@ -1,13 +1,34 @@
 
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import { useToast } from "@/hooks/use-toast";
 import { Bell, Brush, Trash2 } from "lucide-react";
+import { useEffect, useState } from "react";
 
 
 export default function SettingsPage() {
+    const { toast } = useToast();
+    const [theme, setTheme] = useState('system');
+
+    useEffect(() => {
+        const storedTheme = localStorage.getItem('theme') || 'system';
+        setTheme(storedTheme);
+    }, []);
+
+    useEffect(() => {
+        if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        localStorage.setItem('theme', theme);
+    }, [theme]);
+
   return (
     <div className="flex flex-col gap-8">
       <div>
@@ -53,14 +74,14 @@ export default function SettingsPage() {
             <CardContent className="space-y-4">
                  <div className="space-y-2">
                     <Label htmlFor="theme">Theme</Label>
-                    <Select defaultValue="system">
+                    <Select value={theme} onValueChange={setTheme}>
                         <SelectTrigger id="theme">
                             <SelectValue placeholder="Select theme" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="light">Light</SelectItem>
                             <SelectItem value="dark">Dark</SelectItem>
-                             <SelectItem value="system">System</SelectItem>
+                             <SelectItem value="system" disabled>System</SelectItem>
                         </SelectContent>
                     </Select>
                  </div>
@@ -74,7 +95,10 @@ export default function SettingsPage() {
             </CardHeader>
             <CardContent className="flex justify-between items-center">
                <p className="text-sm font-medium">Delete all attendance records.</p>
-               <Button variant="destructive" disabled>Delete Data</Button>
+               <Button variant="destructive" onClick={() => {
+                   localStorage.removeItem('attendanceRecords');
+                   toast({ title: "Data Deleted", description: "All attendance records have been cleared." });
+               }}>Delete Data</Button>
             </CardContent>
              <CardFooter className="flex justify-between items-center border-t pt-6">
                 <p className="text-sm font-medium">Delete your account.</p>

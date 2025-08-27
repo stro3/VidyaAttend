@@ -13,6 +13,8 @@ import {
   Camera,
   BookOpenCheck,
   Users,
+  ScrollText,
+  BarChart4,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -20,6 +22,8 @@ const links = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/dashboard/attendance", label: "Take Attendance", icon: Camera },
   { href: "/dashboard/students", label: "Students", icon: Users },
+  { href: "/dashboard/attendance-logs", label: "Attendance Logs", icon: ScrollText },
+  { href: "/dashboard/reports", label: "Reports", icon: BarChart4 },
 ];
 
 function NavComponent() {
