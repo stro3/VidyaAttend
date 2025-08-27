@@ -16,6 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import Link from "next/link";
 
 function HeaderComponent() {
   const router = useRouter();
@@ -29,13 +30,6 @@ function HeaderComponent() {
     router.push("/");
   };
   
-  const handleNotImplemented = () => {
-    toast({
-      title: "Feature not implemented",
-      description: "This functionality is not yet available.",
-    });
-  };
-
   return (
     <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background/80 backdrop-blur-sm px-4 md:px-6">
       <SidebarTrigger className="md:hidden" />
@@ -57,8 +51,12 @@ function HeaderComponent() {
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleNotImplemented}>Profile</DropdownMenuItem>
-            <DropdownMenuItem onClick={handleNotImplemented}>Settings</DropdownMenuItem>
+            <Link href="/dashboard/profile" passHref>
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+            </Link>
+            <Link href="/dashboard/settings" passHref>
+                <DropdownMenuItem>Settings</DropdownMenuItem>
+            </Link>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive focus:bg-destructive/10">
               <LogOut className="mr-2 h-4 w-4" />
