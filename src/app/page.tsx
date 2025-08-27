@@ -1,5 +1,7 @@
 import AuthForm from '@/components/auth-form';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 import { BookOpenCheck } from 'lucide-react';
 
 export default function LoginPage() {
@@ -18,6 +20,11 @@ export default function LoginPage() {
           </CardHeader>
           <CardContent>
             <AuthForm />
+             <div className="mt-4 text-center">
+                <Button variant="link" asChild>
+                    <Link href="/landing">Learn More About the Project</Link>
+                </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
