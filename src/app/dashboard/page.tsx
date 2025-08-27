@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect, useMemo } from 'react';
@@ -12,9 +11,9 @@ import { DEFAULT_STUDENTS } from '@/lib/data';
 import type { AttendanceRecord, Student } from '@/lib/types';
 import { format, subDays, startOfMonth, endOfMonth, isWithinInterval } from 'date-fns';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Badge } from '../ui/badge';
-import { Input } from '../ui/input';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 export default function DashboardPage() {
   const [attendanceRecords] = useLocalStorage<AttendanceRecord[]>('attendanceRecords', []);
@@ -25,10 +24,13 @@ export default function DashboardPage() {
     setIsClient(true);
   }, []);
 
-  const today = useMemo(() => format(new Date(), 'yyyy-MM-dd'), []);
+  const today = useMemo(() => {
+    if (!isClient) return null;
+    return format(new Date(), 'yyyy-MM-dd')
+  }, [isClient]);
 
   const { todayStats, weekData, mostAbsences, isAttendancePending } = useMemo(() => {
-    if (!isClient) return { todayStats: { present: 0, absent: 0, tardy: 0 }, weekData: [], mostAbsences: [], isAttendancePending: true };
+    if (!isClient || !today) return { todayStats: { present: 0, absent: 0, tardy: 0 }, weekData: [], mostAbsences: [], isAttendancePending: true };
 
     // Today's stats
     const todayRecords = attendanceRecords.filter(rec => rec.date === today);
