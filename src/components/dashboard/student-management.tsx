@@ -57,7 +57,12 @@ export default function StudentManagement() {
     if (students.length === 0) {
       return "S001";
     }
-    const lastId = students[students.length - 1].id;
+    const lastId = students.reduce((maxId, student) => {
+        const currentNum = parseInt(student.id.substring(1));
+        const maxNum = parseInt(maxId.substring(1));
+        return currentNum > maxNum ? student.id : maxId;
+    }, "S000");
+
     const lastNum = parseInt(lastId.substring(1));
     return `S${(lastNum + 1).toString().padStart(3, '0')}`;
   }

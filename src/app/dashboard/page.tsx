@@ -53,11 +53,11 @@ export default function DashboardPage() {
     // Weekly chart data
     const last7Days = Array.from({ length: 7 }, (_, i) => subDays(currentDate, i)).reverse();
     const weekData = last7Days.map(day => {
-        const dateStr = format(day, 'yyyy-MM-dd');
-        const dayRecords = attendanceRecords.filter(rec => rec.date === dateStr);
+        const dateStr = format(day, 'EEE');
+        const dayRecords = attendanceRecords.filter(rec => rec.date === format(day, 'yyyy-MM-dd'));
         const presentCount = dayRecords.filter(r => r.status === 'Present' || r.status === 'Tardy').length;
         return {
-            name: format(day, 'EEE'),
+            name: dateStr,
             date: format(day, 'MMM d'),
             present: presentCount,
             absent: students.length - presentCount,

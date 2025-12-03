@@ -106,7 +106,7 @@ export default function LandingPage() {
                 </section>
                 
                 <div className="flex justify-center -mt-16 mb-16">
-                     <Image src="https://picsum.photos/seed/4/1200/600" width={1200} height={600} alt="Happy students in a rural classroom" className="rounded-lg shadow-2xl" data-ai-hint="happy students rural" />
+                     <Image src="https://picsum.photos/seed/ruralSchool/1200/600" width={1200} height={600} alt="Happy students in a rural classroom with technology" className="rounded-lg shadow-2xl" data-ai-hint="happy students rural" />
                 </div>
 
 
@@ -174,7 +174,7 @@ export default function LandingPage() {
                         </Card>
                     </div>
                      <div className="flex justify-center">
-                        <Image src="https://picsum.photos/seed/5/600/700" width={600} height={700} alt="System flowchart diagram showing data flow" className="rounded-lg shadow-xl" data-ai-hint="system flowchart data" />
+                        <Image src="https://picsum.photos/seed/flowchart/600/700" width={600} height={700} alt="System flowchart diagram showing data flow" className="rounded-lg shadow-xl" data-ai-hint="system flowchart data" />
                     </div>
                 </section>
                 
@@ -191,7 +191,7 @@ export default function LandingPage() {
                         <TabsContent value="teacher">
                              <Card className="mt-6">
                                 <CardContent className="p-6 grid md:grid-cols-2 gap-8 items-center">
-                                    <Image src="https://picsum.photos/seed/6/600/400" width={600} height={400} alt="Teacher Dashboard" className="rounded-md" data-ai-hint="dashboard analytics" />
+                                    <Image src="https://picsum.photos/seed/teacherDash/600/400" width={600} height={400} alt="Teacher Dashboard" className="rounded-md" data-ai-hint="dashboard analytics" />
                                     <div>
                                         <h4 className="text-xl font-semibold mb-2">Daily Classroom Management</h4>
                                         <ul className="space-y-2 text-muted-foreground">
@@ -206,7 +206,7 @@ export default function LandingPage() {
                         <TabsContent value="admin">
                              <Card className="mt-6">
                                 <CardContent className="p-6 grid md:grid-cols-2 gap-8 items-center">
-                                     <Image src="https://picsum.photos/seed/7/600/400" width={600} height={400} alt="Admin Dashboard" className="rounded-md" data-ai-hint="school administration data" />
+                                     <Image src="https://picsum.photos/seed/adminDash/600/400" width={600} height={400} alt="Admin Dashboard" className="rounded-md" data-ai-hint="school administration data" />
                                     <div>
                                         <h4 className="text-xl font-semibold mb-2">School-Wide Oversight</h4>
                                         <ul className="space-y-2 text-muted-foreground">
@@ -221,7 +221,7 @@ export default function LandingPage() {
                         <TabsContent value="gov">
                             <Card className="mt-6">
                                 <CardContent className="p-6 grid md:grid-cols-2 gap-8 items-center">
-                                     <Image src="https://picsum.photos/seed/8/600/400" width={600} height={400} alt="Government Dashboard showing regional data" className="rounded-md" data-ai-hint="government data map" />
+                                     <Image src="https://picsum.photos/seed/govDash/600/400" width={600} height={400} alt="Government Dashboard showing regional data" className="rounded-md" data-ai-hint="government data map" />
                                     <div>
                                         <h4 className="text-xl font-semibold mb-2">District & Regional Insights</h4>
                                         <ul className="space-y-2 text-muted-foreground">

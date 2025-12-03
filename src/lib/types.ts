@@ -5,7 +5,7 @@ export interface Student {
 }
 
 export interface AttendanceRecord {
-  date: string; // ISO string for date
+  date: string; // YYYY-MM-DD
   studentId: string;
   status: 'Present' | 'Absent' | 'Tardy';
 }
