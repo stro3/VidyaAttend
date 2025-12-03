@@ -32,6 +32,8 @@ import {
 
 const addStudentSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
+  enrollmentId: z.string().min(1, { message: "Enrollment ID is required."}),
+  division: z.string().min(1, { message: "Division is required."}),
 });
 
 type AddStudentFormValues = z.infer<typeof addStudentSchema>;
@@ -50,6 +52,8 @@ export default function StudentManagement() {
     resolver: zodResolver(addStudentSchema),
     defaultValues: {
       name: "",
+      enrollmentId: "",
+      division: "A",
     },
   });
 
@@ -70,12 +74,12 @@ export default function StudentManagement() {
   function onSubmit(values: AddStudentFormValues) {
     setIsLoading(true);
 
-    const existingStudent = students.find(s => s.name.toLowerCase() === values.name.toLowerCase());
+    const existingStudent = students.find(s => s.enrollmentId.toLowerCase() === values.enrollmentId.toLowerCase());
     if (existingStudent) {
       toast({
         variant: "destructive",
         title: "Student Exists",
-        description: "A student with this name is already enrolled.",
+        description: "A student with this enrollment ID already exists.",
       });
       setIsLoading(false);
       return;
@@ -84,6 +88,8 @@ export default function StudentManagement() {
     const newStudent: Student = {
       id: getNextStudentId(),
       name: values.name,
+      enrollmentId: values.enrollmentId,
+      division: values.division,
     };
 
     setStudents([...students, newStudent].sort((a,b) => a.name.localeCompare(b.name)));
@@ -97,11 +103,11 @@ export default function StudentManagement() {
   }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-2">
-      <Card>
+    <div className="grid gap-6 lg:grid-cols-3">
+      <Card className="lg:col-span-1">
         <CardHeader>
           <CardTitle className="flex items-center"><UserPlus className="mr-2" />Add New Student</CardTitle>
-          <CardDescription>Enter the name of the new student to enroll them.</CardDescription>
+          <CardDescription>Enter the details of the new student to enroll them.</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -119,6 +125,32 @@ export default function StudentManagement() {
                   </FormItem>
                 )}
               />
+               <FormField
+                control={form.control}
+                name="enrollmentId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Enrollment ID</FormLabel>
+                    <FormControl>
+                      <Input placeholder="e.g., 2024-001" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+               <FormField
+                control={form.control}
+                name="division"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Division</FormLabel>
+                    <FormControl>
+                      <Input placeholder="e.g., A" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? <Loader2 className="animate-spin" /> : "Add Student"}
               </Button>
@@ -126,37 +158,39 @@ export default function StudentManagement() {
           </Form>
         </CardContent>
       </Card>
-      <Card>
+      <Card className="lg:col-span-2">
         <CardHeader>
           <CardTitle className="flex items-center"><Users className="mr-2" />Enrolled Students</CardTitle>
           <CardDescription>A list of all students currently enrolled.</CardDescription>
         </CardHeader>
         <CardContent>
-           <div className="border rounded-md h-96 overflow-y-auto">
+           <div className="border rounded-md h-[450px] overflow-y-auto">
             <Table>
               <TableHeader className="sticky top-0 bg-card">
                 <TableRow>
-                  <TableHead>ID</TableHead>
-                  <TableHead>Name</TableHead>
+                  <TableHead>Student Name</TableHead>
+                  <TableHead>Enrollment ID</TableHead>
+                  <TableHead>Division</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {!isClient ? (
                    <TableRow>
-                    <TableCell colSpan={2} className="h-24 text-center">
+                    <TableCell colSpan={3} className="h-24 text-center">
                      Loading students...
                     </TableCell>
                   </TableRow>
                 ) : students.length > 0 ? (
                   students.map((student) => (
                     <TableRow key={student.id}>
-                      <TableCell className="font-mono text-muted-foreground">{student.id}</TableCell>
                       <TableCell className="font-medium">{student.name}</TableCell>
+                      <TableCell>{student.enrollmentId}</TableCell>
+                      <TableCell>{student.division}</TableCell>
                     </TableRow>
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={2} className="h-24 text-center">
+                    <TableCell colSpan={3} className="h-24 text-center">
                       No students enrolled yet.
                     </TableCell>
                   </TableRow>

@@ -14,6 +14,7 @@ import { Nav, SidebarHeaderContent } from "@/components/dashboard/nav";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { LogOut } from "lucide-react";
+import Link from "next/link";
 
 export default function DashboardLayout({
   children,
@@ -35,7 +36,9 @@ export default function DashboardLayout({
     <SidebarProvider>
       <Sidebar>
         <SidebarHeader>
-          <SidebarHeaderContent />
+          <Link href="/dashboard" aria-label="Dashboard Home">
+            <SidebarHeaderContent />
+          </Link>
         </SidebarHeader>
         <SidebarContent>
           <Nav />

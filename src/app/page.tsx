@@ -37,8 +37,8 @@ const features = [
         icon: Users
     },
      { 
-        title: "Automated Reports",
-        description: "Generate daily, weekly, or monthly attendance reports with a single click.",
+        title: "Manual Entry",
+        description: "Flexibility to mark attendance manually when needed.",
         icon: BarChart2
     },
 ];
@@ -150,7 +150,7 @@ export default function LandingPage() {
                                     </div>
                                     <div>
                                         <h4 className="font-semibold">Scan & Capture</h4>
-                                        <p className="text-sm text-muted-foreground">As students enter, a teacher uses a smartphone to scan their face or RFID card.</p>
+                                        <p className="text-sm text-muted-foreground">Student enters class → face/RFID scanned by the teacher's smartphone.</p>
                                     </div>
                                 </div>
                                  <div className="flex items-start gap-4">
@@ -165,10 +165,11 @@ export default function LandingPage() {
                                 </div>
                                 <div className="flex items-start gap-4">
                                      <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">3</div>
-                                    <div>
-                                        <h4 className="font-semibold">Sync & Report</h4>
-                                        <p className="text-sm text-muted-foreground">Data is synced to the server when connectivity is available, feeding into dashboards for schools and government.</p>
-                                    </div>
+                                     <div className="w-px h-16 bg-border"></div>
+                                </div>
+                                <div>
+                                    <h4 className="font-semibold">Sync & Report</h4>
+                                    <p className="text-sm text-muted-foreground">Data is synced to the server when connectivity is available, feeding into dashboards for schools and government.</p>
                                 </div>
                             </CardContent>
                         </Card>

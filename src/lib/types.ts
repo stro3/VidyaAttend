@@ -1,7 +1,9 @@
 
 export interface Student {
-  id: string;
+  id: string; // Unique system ID, e.g. S001
   name: string;
+  enrollmentId: string; // School-provided enrollment ID
+  division: string;
 }
 
 export interface AttendanceRecord {
