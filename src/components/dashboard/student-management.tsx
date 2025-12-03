@@ -81,7 +81,7 @@ export default function StudentManagement() {
       name: values.name,
     };
 
-    setStudents([...students, newStudent]);
+    setStudents([...students, newStudent].sort((a,b) => a.name.localeCompare(b.name)));
 
     toast({
       title: "Student Added",

@@ -76,9 +76,14 @@ export default function AttendanceLogsTable() {
           const dateA = parseDateSafe(a.date);
           const dateB = parseDateSafe(b.date);
           if (!dateA || !dateB) return 0;
-          return dateB.getTime() - dateA.getTime();
+          const nameA = studentMap.get(a.studentId) || '';
+          const nameB = studentMap.get(b.studentId) || '';
+          if (dateB.getTime() - dateA.getTime() !== 0) {
+            return dateB.getTime() - dateA.getTime();
+          }
+          return nameA.localeCompare(nameB);
        });
-  }, [records, dateFilter, studentFilter, isClient]);
+  }, [records, dateFilter, studentFilter, isClient, studentMap]);
 
   const totalPages = Math.ceil(filteredRecords.length / RECORDS_PER_PAGE);
   const paginatedRecords = filteredRecords.slice(
@@ -144,7 +149,7 @@ export default function AttendanceLogsTable() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Students</SelectItem>
-              {students.map(student => (
+              {students.sort((a,b) => a.name.localeCompare(b.name)).map(student => (
                 <SelectItem key={student.id} value={student.id}>{student.name}</SelectItem>
               ))}
             </SelectContent>
@@ -187,7 +192,7 @@ export default function AttendanceLogsTable() {
               ) : (
                 <TableRow>
                   <TableCell colSpan={3} className="h-24 text-center">
-                    No attendance records found.
+                    No attendance records found for the selected filters.
                   </TableCell>
                 </TableRow>
               )}
